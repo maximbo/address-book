@@ -1,0 +1,2 @@
+redis: redis-server
+web: uvicorn backend.app:app --reload

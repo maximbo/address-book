@@ -1,0 +1,38 @@
+name: address-book
+
+services:
+  backend:
+    image: backend-dev:latest
+    build:
+      context: ..
+      dockerfile: deploy/backend/Dockerfile
+      target: development
+    develop:
+      watch:
+        - path: ../pyproject.toml
+          action: rebuild
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file: env-dev
+    ports:
+      - "8000:80"
+    volumes:
+      - ../backend:/app/backend
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      start_period: 2s
+      start_interval: 1s
+      interval: 10s
+      timeout: 2s
+      retries: 10
+    volumes:
+      - redisdata:/data
+
+volumes:
+  redisdata:
