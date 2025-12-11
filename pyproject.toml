@@ -9,7 +9,7 @@ dependencies = [
     "phonenumbers>=9.0.20",
     "pydantic-extra-types>=2.10.6",
     "pydantic-settings>=2.12.0",
-    "redis>=7.1.0",
+    "redis[hiredis]>=7.1.0",
     "uvicorn>=0.38.0",
 ]
 
